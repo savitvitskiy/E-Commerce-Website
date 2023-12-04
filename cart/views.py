@@ -16,7 +16,7 @@ def cart_summary(request):
         'order': order,
     }
     return render(request, 'cart_summary.html', context)
-
+ 
 
 def cart_add(request):
     item = get_object_or_404(Product)
