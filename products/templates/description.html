@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>THIS IS THE PRODUCT DESCRIPTION</h1>
-<img src="{{ product.image_url }}" class="card-img-top" alt="..." style="width: 100%; height: 15vw; object-fit: cover;">
-    <div class="card-body">
+<h1>Product Description</h1>
+
+<div class="card mb-3" style="max-width: 100vw;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ product.image_url }}" class="card-img-top" alt="..." style="width: 25vw; height: 25vw; object-fit: cover;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
         <h5 class="card-title">{{ product.name }}</h5>
         <p class="card-text">${{ product.price }}</p>
+        <p class="card-text">Food Fact: {{ product.fact }}</p>
         <button class="btn btn-primary" type="submit">Add to Cart</button>
+      </div>
     </div>
+  </div>
+</div>
+
 {% endblock %}

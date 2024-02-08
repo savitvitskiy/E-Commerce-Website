@@ -7,9 +7,9 @@ def home(request):
     return render(request, 'home.html')
 
 
-def description(request):
-    products = Product.objects.all()
-    return render(request, 'description.html', {'products': products})
+def description(request, pk):
+    product = Product.objects.get(id=pk)
+    return render(request, 'description.html', {'product': product})
 
 
 def index(request):
