@@ -13,7 +13,6 @@
         <h5 class="card-title">{{ product.name }}</h5>
         <p class="card-text">${{ product.price }}</p>
         <p class="card-text">Food Fact: {{ product.fact }}</p>
-        <br/>ID: {{ product.id }}<br/><br/>
         <button type="button" value="{{ product.id }}" class="btn btn-primary" id="add-cart">Add to Cart</button>
         <a class="btn btn-outline-primary" href="/products" type="submit">Back to Products</a>
       </div>
@@ -42,7 +41,7 @@ $(document).on('click', '#add-cart', function(e){
     },
 
   });
-}
+})
 </script>
 
 {% endblock %}
