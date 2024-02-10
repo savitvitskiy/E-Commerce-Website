@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from products.models import Product
+from django.shortcuts import render, get_object_or_404
 from .models import Order, OrderItem
+from .cart import Cart
+from products.models import Product
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -9,30 +11,28 @@ from .models import Order, OrderItem
 #     return render(request, 'index.html', {'products': products})
 
 def cart_summary(request):
-    order_item = OrderItem.objects.all()
-    order = Order.objects.all()
-    context = {
-        'order_item': order_item,
-        'order': order,
-    }
-    return render(request, 'cart_summary.html', context)
- 
+    # Get the cart
+    cart = Cart(request)
+    return render(request, 'cart_summary.html')
+
 
 def cart_add(request):
-    item = get_object_or_404(Product)
-    order_item = OrderItem.objects.get_or_create(item=item)
-    order_qs = Order.objects.filter()
-    if order_item.exists():
-        order = order_qs[0]
-        if order.items.filter().exists():
-            order_item.quantity += 1
-            order_item.save()
-        else:
-            order.items.add(order_item)
-    else:
-        order = Order.objects.create()
-        order.items.add(order_item)
-    return redirect("core:cart_summary")
+    # Get the cart
+    cart = Cart(request)
+    # Test for POST
+    if request.POST.get('action') == 'post':
+        # Get stuff
+        product_id = int(request.POST.get('product_id'))
+
+        # Lookup product in DB
+        product = get_object_or_404(Product, id=product_id)
+
+        # Save to a session
+        cart.add(product=product)
+
+        # Return a response
+        response = JsonResponse({'Product Name: ': product.name})
+        return response
 
 
 def cart_delete(request):
